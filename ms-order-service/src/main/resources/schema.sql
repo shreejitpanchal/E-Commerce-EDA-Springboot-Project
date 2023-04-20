@@ -1,0 +1,11 @@
+--DROP TABLE IF EXISTS customer_master;
+
+CREATE TABLE IF NOT EXISTS order_master (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  order_id VARCHAR(250) NOT NULL,
+  customer_name VARCHAR(250) NOT NULL,
+  mobile_type VARCHAR(250) NOT NULL,
+  order_date VARCHAR(250) DEFAULT NULL,
+  order_status VARCHAR(250) DEFAULT NULL,
+  order_desc VARCHAR(250) DEFAULT NULL
+);
