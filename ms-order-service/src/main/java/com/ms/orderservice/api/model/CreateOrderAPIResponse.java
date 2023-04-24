@@ -18,8 +18,12 @@ public class CreateOrderAPIResponse {
     private order order;
 
     @Component
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     @Getter
-    public class order {
+    @Setter
+    public static class order {
         private String orderId;
         private String customerName;
         private String productId;

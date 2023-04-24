@@ -36,17 +36,22 @@ public class PublishOrderEvent {
     @Autowired(required = false)
     private JCSMPProperties jcsmpProperties;
 
-    public void sendEvent(CreateOrderAPIRequest apiRequest, String orderId) {
+    public boolean sendEvent(CreateOrderAPIRequest apiRequest, String orderId) {
         logger.info("SendEvent API === Request ==> Start");
 
-        topicName += apiRequest.getMobileType() + "/" + orderId; // Add Mobile Type/OrderId in Topic Hierarchy of the event
+        topicName += apiRequest.getOrder().getProductType() + "/" + orderId; // Add Mobile Type/OrderId in Topic Hierarchy of the event
         Topic topic = JCSMPFactory.onlyInstance().createTopic(topicName);
-        logger.info("SendEvent Step 1 === Request - CustomerName : " + apiRequest.getCustomerName());
+        logger.info("SendEvent Step 1 === Request - CustomerName : " + apiRequest.getOrder().getCustomerName());
 
-        edaPublishOrderEventRequest = EDAPublishOrderEventRequest.builder().orderId(orderId).customerName(apiRequest.getCustomerName()).mobileType(apiRequest.getMobileType()).orderDateTime(apiRequest.getOrderDateTime()).build();
+        edaPublishOrderEventRequest = EDAPublishOrderEventRequest.builder()
+                    .order(apiRequest.getOrder())
+                    .transactionId(apiRequest.getTransactionId())
+                    .correlationId(apiRequest.getTransactionId())
+                    .build();
 
         try {
-            String eventJsonString = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(edaPublishOrderEventRequest);
+            String eventJsonString = jsonMapper.writerWithDefaultPrettyPrinter()
+                                    .writeValueAsString(edaPublishOrderEventRequest);
             logger.info("SendEvent Step 2 === EDA Topic publish on : " + topicName + "\n jsonPayload : " + eventJsonString);
 
             final JCSMPSession session = solaceFactory.createSession();
@@ -57,11 +62,11 @@ public class PublishOrderEvent {
 
             pubEventObj.send(jcsmpMsg, topic);
             logger.info("SendEvent Step 2.1 === EDA Publish Successful ==> End");
+            return true;
 
         } catch (Exception e) {
             logger.info("Step-2-Err ===Error in SendEvent Error :" + e.getMessage());
+            return false;
         }
-
     }
-
 }

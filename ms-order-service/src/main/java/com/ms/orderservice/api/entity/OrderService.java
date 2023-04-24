@@ -51,6 +51,12 @@ public class OrderService {
     @Column(name="order_desc")
     private String orderDesc;
 
+    @Column(name="correlation_id")
+    private String correlationId;
+
+    @Column(name="transaction_id")
+    private String transactionId;
+
     @Column(name="order_datetime")
     private ZonedDateTime orderDateTime;
 
@@ -63,6 +69,6 @@ public class OrderService {
     @Column(name="created_by")
     private String createdBy;
 
-    @Column(name="modified_datetime")
+    @Column(name="modified_by")
     private String modifiedBy;
 }
