@@ -1,10 +1,10 @@
 ## Solace E-Commerce Spring Boot POC Demo using Solace JAVA API
 
 ## Author : Shreejit Panchal
-## Microservice : ms-customer-master
+## Microservice : ms-order-service
 
 ## Git Repo
-[Git Repo Path] https://github.com/shreejitpanchal/ms-customer-master-solace-springboot.
+[Git Repo Path] https://github.com/shreejitpanchal/E-Commerce-EDA-Springboot-Project/tree/main/ms-order-service
 
 
 ## Prerequisites
@@ -13,7 +13,7 @@ https://projectlombok.org/setup/intellij
 
 3: Maven Steps for Build & Install below:
 ``` bash
-cd ms-customer-master-solace-springboot
+cd ms-order-service
 mvn clean install
 ```
 
@@ -22,7 +22,7 @@ mvn clean install
 To try individual samples, go into the project directory and run the sample using maven.
 
 ``` bash
-cd ms-customer-master-solace-springboot
+cd ms-order-service
 mvn spring-boot:run
 
 Browse Swagger API to fire input

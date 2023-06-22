@@ -1,7 +1,6 @@
 package com.ms.orderservice.api.model;
 
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -14,11 +13,11 @@ public class CreateOrderAPIRequest {
 
     private String correlationId;
     private String transactionId;
-    private order order;
+    private orderRequest orderRequest;
 
-    @Component
     @Getter
-    public class order {
+    @Setter
+    public class orderRequest {
         @NotNull
         private String userId;
         private String customerName;

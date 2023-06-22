@@ -6,7 +6,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.ZonedDateTimeSerializer;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
 
@@ -20,12 +19,15 @@ public class EDAPublishOrderEventRequest {
 
     private String correlationId;
     private String transactionId;
-    private CreateOrderAPIRequest.order order;
+    private order order;
 
-    @Component
     @Getter
     @Setter
-    public class order {
+    @Builder
+    @Component
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class order {
         private String userId;
         private String orderId;
         private String customerName;

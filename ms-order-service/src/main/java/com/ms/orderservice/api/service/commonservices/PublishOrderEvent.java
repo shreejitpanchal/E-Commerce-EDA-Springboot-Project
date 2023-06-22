@@ -37,14 +37,25 @@ public class PublishOrderEvent {
     private JCSMPProperties jcsmpProperties;
 
     public boolean sendEvent(CreateOrderAPIRequest apiRequest, String orderId) {
+        EDAPublishOrderEventRequest.order edaPublishOrderDtl = new EDAPublishOrderEventRequest.order();
+
         logger.info("SendEvent API === Request ==> Start");
 
-        topicName += apiRequest.getOrder().getProductType() + "/" + orderId; // Add Mobile Type/OrderId in Topic Hierarchy of the event
+        topicName += apiRequest.getOrderRequest().getProductType() + "/" + orderId; // Add Mobile Type/OrderId in Topic Hierarchy of the event
         Topic topic = JCSMPFactory.onlyInstance().createTopic(topicName);
-        logger.info("SendEvent Step 1 === Request - CustomerName : " + apiRequest.getOrder().getCustomerName());
+        logger.info("SendEvent Step 1 === Request - CustomerName : " + apiRequest.getOrderRequest().getCustomerName());
 
         edaPublishOrderEventRequest = EDAPublishOrderEventRequest.builder()
-                    .order(apiRequest.getOrder())
+                    .order(edaPublishOrderDtl.builder()
+                            .userId(apiRequest.getOrderRequest().getUserId())
+                            .orderId(orderId)
+                            .customerName(apiRequest.getOrderRequest().getCustomerName())
+                            .productId(apiRequest.getOrderRequest().getProductId())
+                            .productType(apiRequest.getOrderRequest().getProductType())
+                            .productDesc(apiRequest.getOrderRequest().getProductDesc())
+                            .quantity(apiRequest.getOrderRequest().getQuantity())
+                            .orderDateTime(apiRequest.getOrderRequest().getOrderDateTime())
+                            .build())
                     .transactionId(apiRequest.getTransactionId())
                     .correlationId(apiRequest.getTransactionId())
                     .build();

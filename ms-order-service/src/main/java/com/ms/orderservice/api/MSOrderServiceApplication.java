@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @SpringBootApplication
 @EntityScan(basePackages = {"com.ms.orderservice"})
-@ComponentScan(basePackages = {"com.solace.orderservice"})
+@ComponentScan(basePackages = {"com.ms.orderservice"})
 public class MSOrderServiceApplication {
 
     public static void main(String[] args) {

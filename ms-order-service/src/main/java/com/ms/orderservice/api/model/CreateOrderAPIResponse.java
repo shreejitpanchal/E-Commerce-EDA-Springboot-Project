@@ -15,15 +15,15 @@ public class CreateOrderAPIResponse {
 
     private String correlationId;
     private String transactionId;
-    private order order;
+    private orderResponse orderResponse;
 
     @Component
-    @NoArgsConstructor
-    @AllArgsConstructor
     @Builder
     @Getter
     @Setter
-    public static class order {
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class orderResponse {
         private String orderId;
         private String customerName;
         private String productId;
